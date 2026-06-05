@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+
+# Nuxt / build output
+.nuxt
+.output
+.data
+dist
+
+# Local SQLite data (keep the folder via .gitkeep)
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite-*
+
+# Logs
+*.log
+logs
+
+# Editor / OS
+.DS_Store
+*.swp
+
+# Env
+.env
+.env.*
+!.env.example
