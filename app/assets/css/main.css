@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
 
 :root {
   /* Surfaces — white background, soft green-tinted neutrals */
