@@ -27,6 +27,14 @@ const sortedProfiles = computed(() => {
 // ── 创建任务 ──
 const showCreate = ref(false)
 const newTask = ref({ title: '', assignee: '', body: '' })
+const assigneeItems = computed(() => [
+  { label: 'Auto（自动分配）', value: '' },
+  ...activeProfiles.value.map(p => ({ label: p.givenName || p.displayName, value: p.slug })),
+])
+const reassignItems = computed(() => [
+  { label: '取消指派', value: '' },
+  ...activeProfiles.value.map(p => ({ label: p.givenName || p.displayName, value: p.slug })),
+])
 const creating = ref(false)
 const toast = useToast()
 async function createTask() {
@@ -185,17 +193,14 @@ async function sendChat() {
       <template #title>New Task</template>
       <template #body>
         <div class="create-form">
-          <UFormField label="Title">
-            <UInput v-model="newTask.title" placeholder="What needs to be done?" />
+          <UFormField label="Title" required>
+            <UInput v-model="newTask.title" placeholder="What needs to be done?" size="lg" class="w-full" autofocus />
           </UFormField>
-          <UFormField label="Assignee (optional)">
-            <select v-model="newTask.assignee" class="eng-select" style="width:100%">
-              <option value="">Auto</option>
-              <option v-for="p in activeProfiles" :key="p.slug" :value="p.slug">{{ p.givenName || p.displayName }}</option>
-            </select>
+          <UFormField label="Assignee" hint="Optional">
+            <USelect v-model="newTask.assignee" :items="assigneeItems" size="lg" icon="i-lucide-user-round" class="w-full" />
           </UFormField>
-          <UFormField label="Description (optional)">
-            <UTextarea v-model="newTask.body" placeholder="Details..." :rows="3" />
+          <UFormField label="Description" hint="Optional">
+            <UTextarea v-model="newTask.body" placeholder="Add any details…" :rows="3" size="lg" class="w-full" />
           </UFormField>
         </div>
       </template>
@@ -221,16 +226,13 @@ async function sendChat() {
           </div>
           <!-- Assign sub-modal -->
           <div v-if="showAssign" class="td-sub-modal">
-            <select v-model="assignSlug" class="eng-select" style="width:100%">
-              <option value="">Unassign</option>
-              <option v-for="p in activeProfiles" :key="p.slug" :value="p.slug">{{ p.givenName || p.displayName }}</option>
-            </select>
-            <UButton size="sm" color="primary" @click="assignTask(actionTask!.id)">Confirm</UButton>
+            <USelect v-model="assignSlug" :items="reassignItems" size="md" icon="i-lucide-user-round" class="w-full" />
+            <UButton size="sm" color="primary" block @click="assignTask(actionTask!.id)">Confirm</UButton>
           </div>
           <!-- Decompose sub-modal -->
           <div v-if="showDecompose" class="td-sub-modal">
-            <UTextarea v-model="subTasksText" placeholder="One sub-task per line&#10;调研&#10;编码&#10;测试" :rows="4" />
-            <UButton size="sm" color="primary" @click="decomposeTask(actionTask!.id)">Decompose</UButton>
+            <UTextarea v-model="subTasksText" placeholder="One sub-task per line&#10;调研&#10;编码&#10;测试" :rows="4" class="w-full" />
+            <UButton size="sm" color="primary" block @click="decomposeTask(actionTask!.id)">Decompose</UButton>
           </div>
         </div>
       </template>
@@ -295,7 +297,7 @@ async function sendChat() {
 .ws-status.blocked{color:var(--color-danger)}
 .ws-chat-hint{font-size:.55rem;color:var(--color-primary);opacity:0;transition:opacity .15s;position:absolute;bottom:4px}
 .ws:hover .ws-chat-hint{opacity:1}
-.create-form{display:flex;flex-direction:column;gap:12px}
+.create-form{display:flex;flex-direction:column;gap:18px}
 .modal-footer{display:flex;justify-content:flex-end;gap:8px}
 .task-detail{display:flex;flex-direction:column;gap:8px}
 .td-row{display:flex;gap:8px;font-size:.85rem}
