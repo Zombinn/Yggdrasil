@@ -1,5 +1,6 @@
 <template>
-  <div class="app-shell">
+  <UApp>
+    <div class="app-shell">
     <nav class="app-nav">
       <div class="app-brand" title="Yggdrasil">
         <UIcon name="i-lucide-sprout" class="brand-icon" />
@@ -22,7 +23,8 @@
     <main class="app-main">
       <NuxtPage />
     </main>
-  </div>
+    </div>
+  </UApp>
 </template>
 
 <style>

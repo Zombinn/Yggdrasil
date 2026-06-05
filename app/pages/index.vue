@@ -145,7 +145,7 @@ async function sendChat() {
     <header class="wr-header">
       <div class="wr-left"><h1 class="wr-title brand-gradient">Yggdrasil</h1><span class="wr-sub">War Room</span></div>
       <div class="wr-right">
-        <UButton v-if="dispatcherStale" color="warning" size="sm" variant="soft" icon="i-lucide-alert-triangle">Dispatcher 无响应</UButton>
+        <UButton v-if="dispatcherStale" color="warning" size="sm" variant="soft" icon="i-lucide-triangle-alert">Dispatcher 无响应</UButton>
         <UButton icon="i-lucide-plus" color="primary" size="sm" @click="showCreate = true">New Task</UButton>
         <UButton icon="i-lucide-refresh-cw" variant="ghost" color="neutral" size="sm" @click="refresh()" />
       </div>
